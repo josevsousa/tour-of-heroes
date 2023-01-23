@@ -1,0 +1,15 @@
+
+<!-- so exibe esse div se tiver uma message no service message -->
+<div *ngIf="messageService.messages.length">
+    <h2>Messages</h2>
+    <!-- Ao clicar sera chamanda a funcao clear no messageService  -->
+    <button type="button" class="clear" (click)="messageService.clear()">
+        Clear Messages
+    </button>
+
+    <!-- lista messages no messageService  -->
+    <div *ngFor="let message of  messageService.messages">
+        {{message}}
+    </div>
+</div>
+
