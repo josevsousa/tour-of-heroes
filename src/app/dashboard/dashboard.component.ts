@@ -11,12 +11,11 @@ export class DashboardComponent implements OnInit {
 
   heroes: Hero[] = [];
 
-  public teste: any[] = [2, "jose", "sousa"];
+  public teste: any[] = [2, "jose", "sousa"]; 
 
   constructor(private heroService: HeroService){}
 
   ngOnInit(): void{
-    this.getHeroes();
   }
 
   // tem que se inscrever na getHeroes HeroService
