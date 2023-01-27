@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../services/hero.service';
 import { Hero } from '../models/hero';
+import { catchError, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class HeroDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
+    private http: HttpClient,
     private location: Location
   ){}
   //O location um serviço Angular para interagir com o navegador. Este serviço permite navegar de volta para a visualização anterior.
@@ -36,4 +39,13 @@ export class HeroDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void{
+    if(this.hero){ //pegar o hero selecionado
+      this.heroService.updateHero(this.hero) //chama func updateHero passando o hero selicionado
+        .subscribe(()=> this.goBack());
+    }
+  }
+
+  
 }
