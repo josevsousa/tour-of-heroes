@@ -5,7 +5,7 @@ import { Hero } from './models/hero';
 @Injectable({
   providedIn: 'root'
 })
-export class InMemoryDataService implements InMemoryDataService {
+export class InMemoryDataService implements InMemoryDbService {
 
   createDb() {
     const heroes = [

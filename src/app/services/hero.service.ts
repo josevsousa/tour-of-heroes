@@ -25,15 +25,28 @@ export class HeroService {
     private messageService: MessageService) { 
   }
 
+    /** GET heroes from the server */
+    getHeroes(): Observable<Hero[]> {
+      return this.http.get<Hero[]>(this.heroesUrl)
+        .pipe(
+          tap(_ => this.log('fetched heroes')),
+          catchError(this.handleError<Hero[]>('getHeroes', []))
+        );
+    }
 
-  /** GET heroes from the server */
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
-      .pipe(
-        tap(_ => this.log('fetched heroes')),
-        catchError(this.handleError<Hero[]>('getHeroes', []))
+    searchHeroes(term: string): Observable<Hero[]>{
+      // se for vazio
+      if(!term.trim()){
+        return of([])
+      }
+      return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+        tap(x => x.length ?
+            this.log(`found heroes matching "${term}"`):
+            this.log(`no heroes matching ${term}`)),
+        catchError(this.handleError<Hero[]>(`searchHeroes`, []))    
       );
-  }
+    }
+
 
     /** POST: add a new hero to the server */
     addHero(hero: Hero): Observable<Hero> {
